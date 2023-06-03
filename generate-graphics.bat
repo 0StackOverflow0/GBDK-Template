@@ -1,24 +1,14 @@
 @ECHO OFF
 
+setlocal EnableDelayedExpansion
+
 SET GBDK=C:/gbdk
 SET PNG2ASSET=%GBDK%/bin/png2asset.exe
 
-:: Sprites
+:: Sprites, Backgrounds & Maps
 FOR /R "gfx" %%X IN (*.png) DO (
-    IF exist "%%X.sprite" (
-        FOR /F "tokens=*" %%i IN ('type "%%X.sprite"') DO (
-            %PNG2ASSET% %%X -c gfx/%%~nX.c %%i
-        )
-    )
-)
-
-:: Backgrounds & Maps
-FOR /R "gfx" %%X IN (*.png) DO (
-    IF exist "%%X.map" (
-        FOR /F "tokens=*" %%i IN ('type "%%X.map"') DO (
-            %PNG2ASSET% %%X -c gfx\%%~nX.c %%i
-        )
-    )
+    FOR /F "tokens=*" %%i IN ('type "%%X.meta"') DO SET FLAGS=%%i
+    %PNG2ASSET% %%X -c gfx\%%~nX.c !FLAGS!
 )
 
 :: move .h files to their proper location

@@ -21,10 +21,10 @@ void input(void)
     if (keys & J_START && !(last_keys & J_START)) {
         if (toggle == 0) {
             toggle++;
-            show_image();
+            show_image(); // Banked Function that accesses Banked Data
         } else {
             toggle = 0;
-            hide_image();
+            hide_image(); // Banked Function that accesses Banked Data
         }
     }
     last_keys = keys;
@@ -47,9 +47,9 @@ void init_music(void)
 
 void init_display(void)
 {
-    load_image();
-    load_map();
-    show_map();
+    load_image(); // Banked Function that accesses Banked Data
+    load_map();   // Banked Function that accesses Banked Data
+    show_map();   // Banked Function that accesses Banked Data
     
     SHOW_BKG;
     SHOW_SPRITES;
@@ -58,7 +58,7 @@ void init_display(void)
 
 void init_rand(void)
 {
-    waitpad(0xff);
+    waitpad(0xff); // Using DIV_REG as seed is best after user input is received
 
     initrand(DIV_REG);
 }
